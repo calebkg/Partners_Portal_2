@@ -19,7 +19,7 @@ export class LoginComponent {
 
   onLogin() {
     if (this.email && this.password) {
-      this.router.navigate(['/dashboard/approved-funding']); // Correct spelling
+      this.router.navigate(['/approved-funding']);
     }
   }
 
