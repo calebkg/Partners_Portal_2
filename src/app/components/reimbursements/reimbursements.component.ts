@@ -30,7 +30,6 @@ export class ReimbursementsComponent implements OnInit, OnDestroy {
   searchTerm = '';
   currentPage = 1;
   itemsPerPage = 10;
-  totalPages = 10;
   
   reimbursementsList: Reimbursement[] = [
     {

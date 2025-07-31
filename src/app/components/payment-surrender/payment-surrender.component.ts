@@ -31,7 +31,6 @@ export class PaymentSurrenderComponent implements OnInit, OnDestroy {
   searchTerm = '';
   currentPage = 1;
   itemsPerPage = 10;
-  totalPages = 10;
   
   paymentSurrenderList: PaymentSurrender[] = [
     {
@@ -78,7 +77,7 @@ export class PaymentSurrenderComponent implements OnInit, OnDestroy {
       actualSpent: 100000,
       description: 'For wards',
       status: 'Open'
-    }
+    },
     {
       id: '6',
       no: 'SUBPS_0021',
