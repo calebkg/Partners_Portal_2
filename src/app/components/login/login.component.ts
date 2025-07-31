@@ -20,15 +20,25 @@ export class LoginComponent {
   onLogin() {
     if (this.email && this.password) {
       this.router.navigate(['/approved-funding']);
+    } else {
+      // Navigate to approved-funding even without credentials for now (placeholder login)
+      this.router.navigate(['/approved-funding']);
     }
   }
 
-  goToReset() {
+  goToReset(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
     // Navigate to reset password when implemented
     console.log('Reset password functionality to be implemented');
   }
 
-  goToRegister() {
+  goToRegister(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
+    console.log('Navigating to register...');
     this.router.navigate(['/register']);
   }
 }
