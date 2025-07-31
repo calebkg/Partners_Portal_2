@@ -1,0 +1,77 @@
+@use '../../../../styles.scss' as *;
+
+.footer {
+  background: $primary-bg;
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: auto;
+  margin-left: -280px;
+  width: calc(100% + 280px);
+  box-shadow: 0 -4px 20px rgba(28, 53, 87, 0.1);
+  color: $white;
+  position: relative;
+  z-index: 1000;
+}
+
+.footer-text {
+  font-size: 14px;
+  color: $white;
+  display: inline-block;
+  padding-left: 280px;
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  text-align: center;
+  margin-left: -230px;
+}
+
+.footer-link {
+  color: $accent-color;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: $white;
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .footer {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .footer-text {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .footer {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 15px 10px;
+  }
+  
+  .footer-text {
+    padding-left: 0 !important;
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    padding: 10px 8px;
+  }
+  
+  .footer-text {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+}

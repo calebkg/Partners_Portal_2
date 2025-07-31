@@ -1,0 +1,220 @@
+<div class="new-reimbursement-container">
+  <app-sidebar [sidebarType]="'finance'" [(open)]="sidebarOpen"></app-sidebar>
+  
+  <div class="main-content">
+    <app-header 
+      title="REIMBURSEMENT" 
+      subtitle="Finance Services/Reimbursement"
+      headerClass="finance"
+      [showBackButton]="true"
+      [(sidebarOpen)]="sidebarOpen">
+    </app-header>
+    
+    <div class="new-reimbursement-content">
+      <form [formGroup]="reimbursementForm" (ngSubmit)="onSubmit()" class="form">
+        <div class="new-reimbursement-section card-effect">
+          <div class="section-header">
+            <h2>PAYMENT SURRENDER</h2>
+          </div>
+          
+          <div class="section-body">
+            <!-- Project Details -->
+            <div class="form-section">
+              <h3>Project Details</h3>
+              <div class="form-layout">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Document No:</label>
+                    <input type="text" formControlName="documentNo" value="SUBPR-25-0021" readonly>
+                  </div>
+                  <div class="form-group">
+                    <!-- Empty for spacing -->
+                  </div>
+                </div>
+                
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Currency Code:</label>
+                    <select formControlName="currencyCode">
+                      <option value="KES">KES</option>
+                      <option value="USD">USD</option>
+                      <option value="EUR">EUR</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Amount:</label>
+                    <input type="number" formControlName="amount" placeholder="120,000">
+                  </div>
+                </div>
+                
+                <div class="form-row">
+                  <div class="form-group full-width">
+                    <label>Description</label>
+                    <textarea formControlName="description" placeholder="Description" rows="3"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Supporting Documents -->
+            <div class="form-section">
+              <h3>Supporting Documents</h3>
+              <div class="documents-layout">
+                <div class="upload-section">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>Document Name:</label>
+                      <select>
+                        <option value="">Cash Request</option>
+                        <option value="financial-report">Financial Report</option>
+                        <option value="bank-reconciliation">Bank Reconciliation</option>
+                        <option value="vouchers">Vouchers</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Upload File</label>
+                      <div class="file-upload-row">
+                        <input type="text" placeholder="Choose a File..." readonly>
+                        <button type="button" class="choose-file-btn" (click)="triggerFileUpload()">Choose File</button>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="button" class="upload-btn">UPLOAD</button>
+                </div>
+              </div>
+              
+              <!-- Uploaded Documents Table -->
+              <div class="uploaded-documents" *ngIf="uploadedDocuments.length > 0">
+                <h4>Uploaded Documents</h4>
+                <div class="documents-table-container">
+                  <table class="documents-table">
+                    <thead>
+                      <tr>
+                        <th>Document Name</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let document of uploadedDocuments; let i = index" [class.striped]="i % 2 === 1">
+                        <td>{{ document.name }}</td>
+                        <td>
+                          <div class="document-actions">
+                            <button type="button" class="action-btn view-btn" (click)="viewDocument(document)">
+                              <img src="assets/view.svg" alt="View" width="16" height="16" />
+                              VIEW
+                            </button>
+                            <button type="button" class="action-btn delete-btn" (click)="deleteDocument(document.id)">
+                              <img src="assets/delete.svg" alt="Delete" width="16" height="16" />
+                              DELETE
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Add New Request Line Button -->
+            <button type="button" class="add-new-btn" (click)="openAddLineModal()">
+              <img src="assets/Add.svg" alt="Add" width="24" height="24" />
+              ADD NEW REQUEST LINE
+            </button>
+            
+            <!-- Reimbursement Lines Table -->
+            <div class="request-lines-table-container" *ngIf="reimbursementLines.length > 0">
+              <table class="request-lines-table">
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Document Date</th>
+                    <th>Currency</th>
+                    <th>Amount</th>
+                    <th>Date To</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let line of reimbursementLines; let i = index" [class.striped]="i % 2 === 1">
+                    <td>AR_{{ (i + 31).toString().padStart(4, '0') }}</td>
+                    <td>10/5/2025</td>
+                    <td>{{ line.currencyCode }}.</td>
+                    <td>{{ line.amount | currency:'KSH':'symbol':'1.0-0' }}</td>
+                    <td>20/5/2025</td>
+                    <td>{{ line.description }}</td>
+                    <td>Open</td>
+                    <td>
+                      <div class="line-actions">
+                        <button type="button" class="action-btn delete-btn" (click)="deleteLine(line.id)">
+                          <img src="assets/delete.svg" alt="Delete" width="16" height="16" />
+                          DELETE
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <!-- Form Actions -->
+          <div class="section-footer">
+            <button type="submit" class="btn btn-primary">submit</button>
+            <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    
+    <app-footer></app-footer>
+  </div>
+</div>
+
+<!-- Add/Edit Reimbursement Line Modal -->
+<div class="modal-overlay" *ngIf="showAddLineModal" (click)="closeAddLineModal()">
+  <div class="modal-content add-line-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Reimbursement Line</h2>
+    </div>
+    
+    <form [formGroup]="reimbursementLineForm">
+      <div class="modal-body">
+        <div class="form-section">
+          <h3>Request Details</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Currency Code</label>
+              <select formControlName="currencyCode">
+                <option value="">Currency Code</option>
+                <option *ngFor="let currency of currencyOptions" [value]="currency.code">
+                  {{ currency.code }} - {{ currency.name }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Amount</label>
+              <input type="number" formControlName="amount" placeholder="0">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label>Description</label>
+              <textarea formControlName="description" placeholder="Description" rows="4"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="submitLine()">
+          {{ isEditMode ? 'Update' : 'Add line' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="closeAddLineModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

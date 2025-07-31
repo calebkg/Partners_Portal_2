@@ -1,0 +1,114 @@
+<div class="approved-funding-container">
+  <app-sidebar [sidebarType]="'finance'" [(open)]="sidebarOpen"></app-sidebar>
+  
+  <div class="main-content">
+    <app-header 
+      title="APPROVED FUNDING" 
+      subtitle="Finance Services/Approved Funding"
+      headerClass="finance"
+      [showBackButton]="false"
+      [(sidebarOpen)]="sidebarOpen">
+    </app-header>
+    
+    <div class="approved-funding-content">
+      <div class="card-header">
+        <h2>APPROVED FUNDING LIST</h2>
+      </div>
+      
+      <div class="card-body">
+        <button class="filter-btn">
+          <img src="assets/Add filter.svg" alt="Add filter" width="10" height="10" style="margin-right: 6px;" /> Add filter
+        </button>
+        <div class="search-box">
+          <img src="assets/Search here.svg" alt="Search here" width="10" height="10" class="search-icon" />
+          <input type="text" placeholder="Search here" [(ngModel)]="searchTerm">
+        </div>
+      </div>
+      
+      <!-- Desktop Table -->
+      <div class="table-container hide-mobile">
+        <table class="funding-table">
+          <thead>
+            <tr>
+              <th>Funding</th>
+              <th>Programme</th>
+              <th>Purpose</th>
+              <th>Budget Amount</th>
+              <th>Obligated Amount</th>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let funding of approvedFundingList; let i = index" [class.striped]="i % 2 === 1">
+              <td>{{ funding.funding }}</td>
+              <td>{{ funding.programme }}</td>
+              <td>{{ funding.purpose }}</td>
+              <td>{{ funding.budgetAmount | currency:'KSH':'symbol':'1.0-0' }}</td>
+              <td>{{ funding.obligatedAmount | currency:'KSH':'symbol':'1.0-0' }}</td>
+              <td>{{ funding.date }}</td>
+              <td>{{ funding.description }}</td>
+              <td>
+                <span class="status-badge" [class]="'status-' + funding.status.toLowerCase()">
+                  {{ funding.status }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Mobile Cards -->
+      <div class="mobile-cards show-mobile">
+        <div class="funding-card" *ngFor="let funding of approvedFundingList">
+          <div class="card-header-mobile">
+            <h3>{{ funding.funding }}</h3>
+            <span class="status-badge" [class]="'status-' + funding.status.toLowerCase()">
+              {{ funding.status }}
+            </span>
+          </div>
+          <div class="card-body-mobile">
+            <div class="card-row">
+              <span class="card-label">Programme:</span>
+              <span class="card-value">{{ funding.programme }}</span>
+            </div>
+            <div class="card-row">
+              <span class="card-label">Purpose:</span>
+              <span class="card-value">{{ funding.purpose }}</span>
+            </div>
+            <div class="card-row">
+              <span class="card-label">Budget Amount:</span>
+              <span class="card-value">{{ funding.budgetAmount | currency:'KSH':'symbol':'1.0-0' }}</span>
+            </div>
+            <div class="card-row">
+              <span class="card-label">Obligated Amount:</span>
+              <span class="card-value">{{ funding.obligatedAmount | currency:'KSH':'symbol':'1.0-0' }}</span>
+            </div>
+            <div class="card-row">
+              <span class="card-label">Date:</span>
+              <span class="card-value">{{ funding.date }}</span>
+            </div>
+            <div class="card-row">
+              <span class="card-label">Description:</span>
+              <span class="card-value">{{ funding.description }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Pagination -->
+      <div class="pagination">
+        <button class="page-btn" [disabled]="currentPage === 1" (click)="previousPage()">Prev</button>
+        <button class="page-btn active">{{ currentPage }}</button>
+        <button class="page-btn" (click)="nextPage()">{{ currentPage + 1 }}</button>
+        <button class="page-btn" (click)="goToPage(currentPage + 2)">{{ currentPage + 2 }}</button>
+        <span class="page-dots">...</span>
+        <button class="page-btn" (click)="lastPage()">{{ totalPages }}</button>
+        <button class="page-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+      </div>
+    </div>
+    
+    <app-footer></app-footer>
+  </div>
+</div>

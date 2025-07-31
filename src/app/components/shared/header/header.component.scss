@@ -1,0 +1,121 @@
+@use 'sass:color';
+@use '../../../../styles.scss' as *;
+
+.header {
+  background: $primary-bg;
+  position: relative;
+  padding: 20px 30px;
+  color: $white;
+  border-radius: 20px;
+  margin: 20px;
+  overflow: hidden;
+  min-height: 100px;
+}
+
+.header-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/assets/header-pattern.png') no-repeat center center;
+  background-size: cover;
+  opacity: 0.3;
+  z-index: 1;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.header-title h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+  color: $white;
+  font-family: 'Poppins', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  object-fit: cover;
+}
+
+.user-details {
+  text-align: right;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: $white;
+  font-family: 'Poppins', sans-serif;
+}
+
+.user-email {
+  font-size: 12px;
+  opacity: 0.8;
+  color: $white;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .header {
+    padding: 15px 20px;
+    margin: 10px;
+  }
+  
+  .header-title h1 {
+    font-size: 24px;
+  }
+  
+  .user-avatar {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .user-name {
+    font-size: 12px;
+  }
+  
+  .user-email {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 12px 15px;
+    margin: 5px;
+  }
+  
+  .header-title h1 {
+    font-size: 20px;
+  }
+  
+  .user-avatar {
+    width: 30px;
+    height: 30px;
+  }
+}

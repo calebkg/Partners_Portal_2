@@ -1,0 +1,51 @@
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #E5F0FF; /* Project main background color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.circular-loader {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-loader svg {
+  width: 90px;
+  height: 90px;
+  display: block;
+}
+
+.loader-bg {
+  stroke: #1a2a3a;
+  opacity: 0.15;
+}
+
+.loader-fg {
+  stroke: var(--primary-blue);
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 25;
+  transform-origin: 50% 50%;
+  animation: rotate-loader 1s linear infinite;
+}
+
+@keyframes rotate-loader {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+p {
+  margin: 0;
+  color: var(--text-dark);
+  font-weight: 500;
+} 

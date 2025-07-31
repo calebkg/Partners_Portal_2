@@ -1,0 +1,189 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+export interface UploadedDocument {
+  id: string;
+  name: string;
+  type: string;
+  size: number;
+  uploadDate: string;
+}
+
+export interface BankAccount {
+  id: string;
+  bankName: string;
+  branchName: string;
+  accountNo: string;
+  amount: string;
+}
+
+@Component({
+  selector: 'app-registration',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.scss']
+})
+export class RegistrationComponent implements OnInit {
+  currentStep = 1;
+  totalSteps = 3;
+  
+  personalInfoForm!: FormGroup;
+  bankDetailsForm!: FormGroup;
+  
+  uploadedDocuments: UploadedDocument[] = [
+    {
+      id: '1',
+      name: 'Tax Certificate',
+      type: 'PDF',
+      size: 1024000,
+      uploadDate: '2025-01-15'
+    },
+    {
+      id: '2',
+      name: 'Certified bank account details',
+      type: 'PDF',
+      size: 2048000,
+      uploadDate: '2025-01-15'
+    },
+    {
+      id: '3',
+      name: 'Registration Certificate',
+      type: 'PDF',
+      size: 1536000,
+      uploadDate: '2025-01-15'
+    }
+  ];
+  
+  bankAccounts: BankAccount[] = [
+    {
+      id: '1',
+      bankName: 'Equity Bank',
+      branchName: 'Kencom',
+      accountNo: '7098567231680',
+      amount: 'Brianna Kirui'
+    },
+    {
+      id: '2',
+      bankName: 'Equity Bank',
+      branchName: 'Kencom',
+      accountNo: '7098567231680',
+      amount: 'Brianna Kirui'
+    }
+  ];
+
+  constructor(
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.initializeForms();
+  }
+
+  ngOnInit(): void {
+    // Initialize component
+  }
+
+  private initializeForms() {
+    this.personalInfoForm = this.fb.group({
+      registrationNo: ['347089'],
+      organizationName: ['SYRE'],
+      physicalAddress: ['NAIROBI'],
+      phoneNumber: ['0759663648'],
+      pinNo: ['30457143'],
+      uniqueEntityId: [''],
+      ngoType: [''],
+      emailAddress: ['technical@sysre.co.ke'],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required]
+    });
+
+    this.bankDetailsForm = this.fb.group({
+      bankCode: ['', Validators.required],
+      bankBranch: ['', Validators.required],
+      accountNo: ['', Validators.required],
+      accountName: ['', Validators.required]
+    });
+  }
+
+  nextStep() {
+    if (this.currentStep < this.totalSteps) {
+      this.currentStep++;
+    }
+  }
+
+  previousStep() {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+    }
+  }
+
+  goToStep(step: number) {
+    if (step >= 1 && step <= this.totalSteps) {
+      this.currentStep = step;
+    }
+  }
+
+  triggerFileUpload() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.pdf,.jpg,.jpeg,.png';
+    fileInput.onchange = (event: any) => {
+      const file = event.target.files[0];
+      if (file) {
+        this.handleFileUpload(file);
+      }
+    };
+    fileInput.click();
+  }
+
+  private handleFileUpload(file: File) {
+    const newDocument: UploadedDocument = {
+      id: Date.now().toString(),
+      name: file.name,
+      type: file.type.includes('pdf') ? 'PDF' : 'Image',
+      size: file.size,
+      uploadDate: new Date().toISOString().split('T')[0]
+    };
+    
+    this.uploadedDocuments.push(newDocument);
+  }
+
+  viewDocument(document: UploadedDocument) {
+    console.log('Viewing document:', document.name);
+  }
+
+  deleteDocument(documentId: string) {
+    this.uploadedDocuments = this.uploadedDocuments.filter(doc => doc.id !== documentId);
+  }
+
+  deleteBankAccount(accountId: string) {
+    this.bankAccounts = this.bankAccounts.filter(account => account.id !== accountId);
+  }
+
+  addBankAccount() {
+    if (this.bankDetailsForm.valid) {
+      const newAccount: BankAccount = {
+        id: Date.now().toString(),
+        ...this.bankDetailsForm.value
+      };
+      this.bankAccounts.push(newAccount);
+      this.bankDetailsForm.reset();
+    }
+  }
+
+  onSubmit() {
+    console.log('Registration submitted');
+    console.log('Personal Info:', this.personalInfoForm.value);
+    console.log('Bank Accounts:', this.bankAccounts);
+    console.log('Documents:', this.uploadedDocuments);
+    
+    // Navigate to login or dashboard
+    this.router.navigate(['/login']);
+  }
+
+  backToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}

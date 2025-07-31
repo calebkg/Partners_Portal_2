@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Global color variables for Partners Portal
+$primary-bg: #1C3557;
+$primary-red: #E73846;
+$accent-color: #E73846;
+$white: #fff;
+$text-dark: #1C3557;
+$text-light: #9CA3AF;
+$input-bg: #F9FAFB;
+$input-border: #E5E7EB;
+
+html, body {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  background: $primary-bg;
+  color: $text-dark;
+  overflow-x: hidden;
+}
+
+/* Hide all scrollbars globally but keep functionality */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

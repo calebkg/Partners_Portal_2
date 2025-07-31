@@ -1,0 +1,113 @@
+<div class="reimbursements-container">
+  <app-sidebar [sidebarType]="'finance'" [(open)]="sidebarOpen"></app-sidebar>
+  
+  <div class="main-content">
+    <app-header 
+      title="REIMBURSEMENT" 
+      subtitle="Finance Services/Reimbursement"
+      headerClass="finance"
+      [showBackButton]="false"
+      [(sidebarOpen)]="sidebarOpen">
+    </app-header>
+    
+    <div class="reimbursements-content">
+      <div class="card-header">
+        <h2>REIMBURSEMENT</h2>
+        <button class="add-new-btn" (click)="navigateToNewReimbursement()">
+          <img src="assets/Add.svg" alt="Add" width="16" height="16" />
+          ADD NEW REIMBURSEMENT
+        </button>
+      </div>
+      
+      <div class="card-body">
+        <button class="filter-btn">
+          <img src="assets/Add filter.svg" alt="Add filter" width="10" height="10" style="margin-right: 6px;" /> Add filter
+        </button>
+        <div class="search-box">
+          <img src="assets/Search here.svg" alt="Search here" width="10" height="10" class="search-icon" />
+          <input type="text" placeholder="Search here" [(ngModel)]="searchTerm">
+        </div>
+      </div>
+      
+      <!-- Desktop Table -->
+      <div class="table-container hide-mobile">
+        <table class="reimbursements-table">
+          <thead>
+            <tr>
+              <th>Reimbursement No.</th>
+              <th>Currency Code</th>
+              <th>Amount</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reimbursement of reimbursementsList; let i = index" [class.striped]="i % 2 === 1">
+              <td>{{ reimbursement.no }}</td>
+              <td>{{ reimbursement.currencyCode }}</td>
+              <td>{{ reimbursement.amount | currency:'KSH':'symbol':'1.0-0' }}</td>
+              <td>{{ reimbursement.description }}</td>
+              <td>
+                <span class="status-badge" [class]="'status-' + reimbursement.status.toLowerCase()">
+                  {{ reimbursement.status }}
+                </span>
+              </td>
+              <td class="action-cell">
+                <button class="action-btn view-btn" (click)="viewReimbursement(reimbursement.id)">
+                  <img src="assets/view.svg" alt="View" width="16" height="16" />
+                  VIEW
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Mobile Cards -->
+      <div class="mobile-cards show-mobile">
+        <div class="reimbursement-card" *ngFor="let reimbursement of reimbursementsList">
+          <div class="card-header-mobile">
+            <h3>{{ reimbursement.no }}</h3>
+            <span class="status-badge" [class]="'status-' + reimbursement.status.toLowerCase()">
+              {{ reimbursement.status }}
+            </span>
+          </div>
+          <div class="card-body-mobile">
+            <div class="card-row">
+              <span class="card-label">Currency Code:</span>
+              <span class="card-value">{{ reimbursement.currencyCode }}</span>
+            </div>
+            <div class="card-row">
+              <span class="card-label">Amount:</span>
+              <span class="card-value">{{ reimbursement.amount | currency:'KSH':'symbol':'1.0-0' }}</span>
+            </div>
+            <div class="card-row">
+              <span class="card-label">Description:</span>
+              <span class="card-value">{{ reimbursement.description }}</span>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="action-btn view-btn mobile" (click)="viewReimbursement(reimbursement.id)">
+              <img src="assets/view.svg" alt="View" width="16" height="16" />
+              VIEW
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Pagination -->
+      <div class="pagination">
+        <button class="page-btn" [disabled]="currentPage === 1" (click)="previousPage()">Prev</button>
+        <button class="page-btn active">{{ currentPage }}</button>
+        <button class="page-btn" (click)="nextPage()">{{ currentPage + 1 }}</button>
+        <button class="page-btn" (click)="goToPage(currentPage + 2)">{{ currentPage + 2 }}</button>
+        <span class="page-dots">...</span>
+        <button class="page-btn" (click)="lastPage()">{{ totalPages }}</button>
+        <button class="page-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+      </div>
+    </div>
+    
+    <app-footer></app-footer>
+  </div>
+</div>

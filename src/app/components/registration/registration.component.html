@@ -1,0 +1,352 @@
+<div class="registration-container">
+  <div class="registration-content">
+    <div class="registration-header">
+      <h1>REGISTER</h1>
+    </div>
+    
+    <!-- Step Navigation -->
+    <div class="step-navigation">
+      <div class="step" [class.active]="currentStep === 1" [class.completed]="currentStep > 1" (click)="goToStep(1)">
+        <div class="step-number">01</div>
+        <div class="step-label">PERSONAL INFORMATION</div>
+      </div>
+      <div class="step" [class.active]="currentStep === 2" [class.completed]="currentStep > 2" (click)="goToStep(2)">
+        <div class="step-number">02</div>
+        <div class="step-label">BANK DETAILS</div>
+      </div>
+      <div class="step" [class.active]="currentStep === 3" [class.completed]="currentStep > 3" (click)="goToStep(3)">
+        <div class="step-number">03</div>
+        <div class="step-label">SUMMARY</div>
+      </div>
+    </div>
+    
+    <!-- Step 1: Personal Information -->
+    <div class="step-content" *ngIf="currentStep === 1">
+      <form [formGroup]="personalInfoForm">
+        <div class="form-section">
+          <h2>Personal Information</h2>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Registration No: <span class="required">*</span></label>
+              <input type="text" formControlName="registrationNo" placeholder="347089">
+            </div>
+            <div class="form-group">
+              <label>Organization Name:</label>
+              <input type="text" formControlName="organizationName" placeholder="SYRE">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Physical Address: <span class="required">*</span></label>
+              <input type="text" formControlName="physicalAddress" placeholder="NAIROBI">
+            </div>
+            <div class="form-group">
+              <label>Phone Number: <span class="required">*</span></label>
+              <input type="text" formControlName="phoneNumber" placeholder="0759663648">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Pin No: <span class="required">*</span></label>
+              <input type="text" formControlName="pinNo" placeholder="30457143">
+            </div>
+            <div class="form-group">
+              <label>Unique Entity Identifier No: <span class="required">*</span></label>
+              <input type="text" formControlName="uniqueEntityId" placeholder="Email Address">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>NGO Type: <span class="required">*</span></label>
+              <select formControlName="ngoType">
+                <option value="">NGO Type</option>
+                <option value="local">Local NGO</option>
+                <option value="international">International NGO</option>
+                <option value="cbo">Community Based Organization</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Email Address: <span class="required">*</span></label>
+              <input type="email" formControlName="emailAddress" placeholder="technical@sysre.co.ke">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Password: <span class="required">*</span></label>
+              <input type="password" formControlName="password">
+            </div>
+            <div class="form-group">
+              <label>Password (Confirm): <span class="required">*</span></label>
+              <input type="password" formControlName="confirmPassword">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Attachments Section -->
+        <div class="form-section">
+          <h3>Attachments</h3>
+          <div class="upload-section">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Document Name:</label>
+                <select>
+                  <option value="">Tax Certificate</option>
+                  <option value="bank-details">Certified bank account details</option>
+                  <option value="registration">Registration Certificate</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Upload File</label>
+                <div class="file-upload-row">
+                  <input type="text" placeholder="Choose a File..." readonly>
+                  <button type="button" class="choose-file-btn" (click)="triggerFileUpload()">Choose File</button>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="upload-btn">UPLOAD</button>
+          </div>
+          
+          <!-- Uploaded Documents -->
+          <div class="uploaded-documents" *ngIf="uploadedDocuments.length > 0">
+            <h4>Uploaded Documents</h4>
+            <div class="documents-table-container">
+              <table class="documents-table">
+                <thead>
+                  <tr>
+                    <th>Document Name</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let document of uploadedDocuments; let i = index" [class.striped]="i % 2 === 1">
+                    <td>{{ document.name }}</td>
+                    <td>
+                      <div class="document-actions">
+                        <button type="button" class="action-btn view-btn" (click)="viewDocument(document)">
+                          <img src="assets/view.svg" alt="View" width="16" height="16" />
+                          VIEW
+                        </button>
+                        <button type="button" class="action-btn delete-btn" (click)="deleteDocument(document.id)">
+                          <img src="assets/delete.svg" alt="Delete" width="16" height="16" />
+                          DELETE
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </form>
+      
+      <div class="step-actions">
+        <button type="button" class="back-to-top-btn" (click)="backToTop()">
+          <img src="assets/arrow-up.svg" alt="Back to top" width="16" height="16" />
+          Back to top
+        </button>
+        <button type="button" class="btn btn-primary" (click)="nextStep()">Next</button>
+      </div>
+    </div>
+    
+    <!-- Step 2: Bank Details -->
+    <div class="step-content" *ngIf="currentStep === 2">
+      <form [formGroup]="bankDetailsForm">
+        <div class="form-section">
+          <h2>Add Bank Details</h2>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Bank Code: <span class="required">*</span></label>
+              <input type="text" formControlName="bankCode">
+            </div>
+            <div class="form-group">
+              <label>Bank Branch:</label>
+              <input type="text" formControlName="bankBranch">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Account No: <span class="required">*</span></label>
+              <input type="text" formControlName="accountNo">
+            </div>
+            <div class="form-group">
+              <label>Account Name: <span class="required">*</span></label>
+              <input type="text" formControlName="accountName">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Bank Accounts Table -->
+        <div class="form-section" *ngIf="bankAccounts.length > 0">
+          <h3>Bank Accounts</h3>
+          <div class="bank-accounts-table-container">
+            <table class="bank-accounts-table">
+              <thead>
+                <tr>
+                  <th>Bank Name</th>
+                  <th>Bank Branch Name</th>
+                  <th>Bank Account No</th>
+                  <th>Amount</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let account of bankAccounts; let i = index" [class.striped]="i % 2 === 1">
+                  <td>{{ account.bankName }}</td>
+                  <td>{{ account.branchName }}</td>
+                  <td>{{ account.accountNo }}</td>
+                  <td>{{ account.amount }}</td>
+                  <td>
+                    <button type="button" class="action-btn delete-btn" (click)="deleteBankAccount(account.id)">
+                      <img src="assets/delete.svg" alt="Delete" width="16" height="16" />
+                      DELETE
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </form>
+      
+      <div class="step-actions">
+        <button type="button" class="back-to-top-btn" (click)="backToTop()">
+          <img src="assets/arrow-up.svg" alt="Back to top" width="16" height="16" />
+          Back to top
+        </button>
+        <div class="action-buttons">
+          <button type="button" class="btn btn-secondary" (click)="previousStep()">Previous</button>
+          <button type="button" class="btn btn-primary" (click)="nextStep()">Next</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Step 3: Summary -->
+    <div class="step-content" *ngIf="currentStep === 3">
+      <div class="form-section">
+        <h2>Personal Information</h2>
+        
+        <div class="summary-grid">
+          <div class="summary-item">
+            <label>Registration No</label>
+            <span>{{ personalInfoForm.get('registrationNo')?.value }}</span>
+          </div>
+          <div class="summary-item">
+            <label>Organization Name</label>
+            <span>{{ personalInfoForm.get('organizationName')?.value }}</span>
+          </div>
+          <div class="summary-item">
+            <label>Physical Address</label>
+            <span>{{ personalInfoForm.get('physicalAddress')?.value }}</span>
+          </div>
+          <div class="summary-item">
+            <label>Phone Number</label>
+            <span>{{ personalInfoForm.get('phoneNumber')?.value }}</span>
+          </div>
+          <div class="summary-item">
+            <label>Pin No</label>
+            <span>{{ personalInfoForm.get('pinNo')?.value }}</span>
+          </div>
+          <div class="summary-item">
+            <label>Unique Entity Identifier No</label>
+            <span>{{ personalInfoForm.get('uniqueEntityId')?.value }}</span>
+          </div>
+          <div class="summary-item">
+            <label>NGO Type</label>
+            <span>{{ personalInfoForm.get('ngoType')?.value }}</span>
+          </div>
+          <div class="summary-item">
+            <label>Email Address</label>
+            <span>{{ personalInfoForm.get('emailAddress')?.value }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Uploaded Documents -->
+      <div class="form-section" *ngIf="uploadedDocuments.length > 0">
+        <h3>Uploaded Documents</h3>
+        <div class="documents-table-container">
+          <table class="documents-table">
+            <thead>
+              <tr>
+                <th>Document Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let document of uploadedDocuments; let i = index" [class.striped]="i % 2 === 1">
+                <td>{{ document.name }}</td>
+                <td>
+                  <div class="document-actions">
+                    <button type="button" class="action-btn view-btn" (click)="viewDocument(document)">
+                      <img src="assets/view.svg" alt="View" width="16" height="16" />
+                      VIEW
+                    </button>
+                    <button type="button" class="action-btn delete-btn" (click)="deleteDocument(document.id)">
+                      <img src="assets/delete.svg" alt="Delete" width="16" height="16" />
+                      DELETE
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Bank Accounts -->
+      <div class="form-section" *ngIf="bankAccounts.length > 0">
+        <h3>Bank Accounts</h3>
+        <div class="bank-accounts-table-container">
+          <table class="bank-accounts-table">
+            <thead>
+              <tr>
+                <th>Bank Name</th>
+                <th>Bank Branch Name</th>
+                <th>Bank Account No</th>
+                <th>Amount</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let account of bankAccounts; let i = index" [class.striped]="i % 2 === 1">
+                <td>{{ account.bankName }}</td>
+                <td>{{ account.branchName }}</td>
+                <td>{{ account.accountNo }}</td>
+                <td>{{ account.amount }}</td>
+                <td>
+                  <button type="button" class="action-btn delete-btn" (click)="deleteBankAccount(account.id)">
+                    <img src="assets/delete.svg" alt="Delete" width="16" height="16" />
+                    DELETE
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="confirmation-text">
+        <p>Confirm the provided details and click submit button</p>
+      </div>
+      
+      <div class="final-actions">
+        <button type="button" class="btn btn-primary" (click)="onSubmit()">SUBMIT</button>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <span class="footer-text">
+        <strong>InSupplyHealth</strong> © 2025. | Powered by 
+        <a href="https://sysre.co.ke/" target="_blank" class="footer-link">Systems Reengineered Ltd.</a>
+      </span>
+    </div>
+  </div>
+</div>

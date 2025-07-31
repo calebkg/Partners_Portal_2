@@ -1,0 +1,53 @@
+<div class="sidebar-overlay" *ngIf="open" (click)="closeSidebar()"></div>
+<div class="sidebar" [ngClass]="{ 'sidebar-open': open }">
+  <div class="logo-container">
+    <div class="logo">
+      <img class="logo-icon" src="login-logo.png" alt="inSupplyHealth Logo" />
+      <span class="logo-text">inSupplyHealth</span>
+    </div>
+  </div>
+  
+  <!-- Partners Portal Sidebar -->
+  <div class="sidebar-content">
+    <nav class="nav-menu">
+      <a routerLink="/approved-funding" class="nav-item">
+        <i class="icon-approved">
+          <img src="assets/SP My approved Leaves.svg" alt="Approved Funding" width="20" height="20">
+        </i>
+        Approved Funding
+      </a>
+      
+      <a routerLink="/payment-request" routerLinkActive="active" class="nav-item">
+        <i class="icon-payment">
+          <img src="assets/SP Finance management.svg" alt="Payment Request" width="20" height="20">
+        </i>
+        Payment Request
+      </a>
+      
+      <a routerLink="/payment-surrender" routerLinkActive="active" class="nav-item">
+        <i class="icon-surrender">
+          <img src="assets/SP Imprest Surrender.svg" alt="Payment Surrender" width="20" height="20">
+        </i>
+        Payment Surrender
+      </a>
+      
+      <a routerLink="/reimbursements" routerLinkActive="active" class="nav-item">
+        <i class="icon-reimbursements">
+          <img src="assets/SP My PendingLeaves.svg" alt="Reimbursements" width="20" height="20">
+        </i>
+        Reimbursements
+      </a>
+    </nav>
+    
+    <div class="user-section">
+      <div class="user-profile">
+        <img src="assets/personalll.png" alt="User" class="user-avatar">
+        <div class="user-info">
+          <div class="user-name">Michael Robinson</div>
+          <div class="user-email">michael.robin@gmail.com</div>
+        </div>
+        <button class="user-menu-btn">⋮</button>
+      </div>
+    </div>
+  </div>
+</div>
