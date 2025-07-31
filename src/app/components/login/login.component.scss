@@ -31,13 +31,7 @@ $border-gray: #e0e0e0;
 .logout-logo {
   width: 40px;
   height: 40px;
-  opacity: 0.8;
-  transition: all 0.3s ease;
-}
-
-.logout-logo:hover {
-  opacity: 1;
-  transform: scale(1.05);
+  object-fit: contain;
 }
 
 .logo-container {
