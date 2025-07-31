@@ -82,7 +82,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Initialize component
+    // Component initialization - no navigation here
+    console.log('Registration component initialized');
   }
 
   private initializeForms() {
@@ -174,13 +175,13 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Registration submitted');
-    console.log('Personal Info:', this.personalInfoForm.value);
-    console.log('Bank Accounts:', this.bankAccounts);
-    console.log('Documents:', this.uploadedDocuments);
-    
-    // Only navigate after successful form submission
+    // Only navigate when user explicitly submits the form
     if (this.personalInfoForm.valid) {
+      console.log('Registration submitted');
+      console.log('Personal Info:', this.personalInfoForm.value);
+      console.log('Bank Accounts:', this.bankAccounts);
+      console.log('Documents:', this.uploadedDocuments);
+      
       // Show success message and navigate to login after delay
       alert('Registration successful! You will be redirected to login.');
       
@@ -188,6 +189,8 @@ export class RegistrationComponent implements OnInit {
       setTimeout(() => {
         this.router.navigate(['/login']);
       }, 2000);
+    } else {
+      console.log('Form is invalid');
     }
   }
 
