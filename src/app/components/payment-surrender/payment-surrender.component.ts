@@ -79,7 +79,44 @@ export class PaymentSurrenderComponent implements OnInit, OnDestroy {
       description: 'For wards',
       status: 'Open'
     }
+    {
+      id: '6',
+      no: 'SUBPS_0021',
+      currencyCode: 'KES',
+      amountAdvanced: 180000,
+      actualSpent: 120000,
+      description: 'Equipment purchase',
+      status: 'Open'
+    },
+    {
+      id: '7',
+      no: 'SUBPS_0022',
+      currencyCode: 'KES',
+      amountAdvanced: 200000,
+      actualSpent: 150000,
+      description: 'Training materials',
+      status: 'Open'
+    },
+    {
+      id: '8',
+      no: 'SUBPS_0023',
+      currencyCode: 'KES',
+      amountAdvanced: 120000,
+      actualSpent: 80000,
+      description: 'Office supplies',
+      status: 'Open'
+    }
   ];
+  
+  get totalPages(): number {
+    return Math.ceil(this.paymentSurrenderList.length / this.itemsPerPage);
+  }
+  
+  get paginatedData(): PaymentSurrender[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.paymentSurrenderList.slice(startIndex, endIndex);
+  }
 
   constructor(private router: Router) {}
 
@@ -120,5 +157,25 @@ export class PaymentSurrenderComponent implements OnInit, OnDestroy {
 
   lastPage() {
     this.currentPage = this.totalPages;
+  }
+  
+  getVisiblePages(): number[] {
+    const pages: number[] = [];
+    const maxVisible = 5;
+    
+    if (this.totalPages <= maxVisible) {
+      for (let i = 1; i <= this.totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      const start = Math.max(1, this.currentPage - 2);
+      const end = Math.min(this.totalPages, start + maxVisible - 1);
+      
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+    }
+    
+    return pages;
   }
 }
