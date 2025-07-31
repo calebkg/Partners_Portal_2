@@ -41,7 +41,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let funding of approvedFundingList; let i = index" [class.striped]="i % 2 === 1">
+            <tr *ngFor="let funding of paginatedData; let i = index" [class.striped]="i % 2 === 1">
               <td>{{ funding.funding }}</td>
               <td>{{ funding.programme }}</td>
               <td>{{ funding.purpose }}</td>
@@ -61,7 +61,7 @@
       
       <!-- Mobile Cards -->
       <div class="mobile-cards show-mobile">
-        <div class="funding-card" *ngFor="let funding of approvedFundingList">
+        <div class="funding-card" *ngFor="let funding of paginatedData">
           <div class="card-header-mobile">
             <h3>{{ funding.funding }}</h3>
             <span class="status-badge" [class]="'status-' + funding.status.toLowerCase()">
@@ -100,11 +100,12 @@
       <!-- Pagination -->
       <div class="pagination">
         <button class="page-btn" [disabled]="currentPage === 1" (click)="previousPage()">Prev</button>
-        <button class="page-btn active">{{ currentPage }}</button>
-        <button class="page-btn" (click)="nextPage()">{{ currentPage + 1 }}</button>
-        <button class="page-btn" (click)="goToPage(currentPage + 2)">{{ currentPage + 2 }}</button>
-        <span class="page-dots">...</span>
-        <button class="page-btn" (click)="lastPage()">{{ totalPages }}</button>
+        <button *ngFor="let page of getVisiblePages()" 
+                class="page-btn" 
+                [class.active]="page === currentPage"
+                (click)="goToPage(page)">
+          {{ page }}
+        </button>
         <button class="page-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
       </div>
     </div>
