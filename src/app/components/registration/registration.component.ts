@@ -179,13 +179,16 @@ export class RegistrationComponent implements OnInit {
     console.log('Bank Accounts:', this.bankAccounts);
     console.log('Documents:', this.uploadedDocuments);
     
-    // Show success message and navigate to login after delay
-    alert('Registration successful! You will be redirected to login.');
-    
-    // Add a delay before navigation to let user see the success message
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-    }, 2000);
+    // Only navigate after successful form submission
+    if (this.personalInfoForm.valid) {
+      // Show success message and navigate to login after delay
+      alert('Registration successful! You will be redirected to login.');
+      
+      // Add a delay before navigation to let user see the success message
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 2000);
+    }
   }
 
   backToTop() {
