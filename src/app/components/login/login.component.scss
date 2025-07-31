@@ -21,25 +21,6 @@ $border-gray: #e0e0e0;
   padding: 2rem;
 }
 
-.logout-logo-container {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  z-index: 10;
-}
-
-.logout-logo {
-  width: 40px;
-  height: 40px;
-  opacity: 0.8;
-  transition: all 0.3s ease;
-}
-
-.logout-logo:hover {
-  opacity: 1;
-  transform: scale(1.05);
-}
-
 .logo-container {
   background: $white;
   padding: 3rem;
