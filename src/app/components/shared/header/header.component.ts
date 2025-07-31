@@ -52,6 +52,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
+    // Clear any stored user data or tokens here if needed
+    console.log('User logged out');
     this.router.navigate(['/login']);
   }
 
