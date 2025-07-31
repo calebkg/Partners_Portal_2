@@ -28,4 +28,9 @@ export class SidebarComponent {
     this.open = false;
     this.openChange.emit(this.open);
   }
+
+  logout() {
+    console.log('User logged out from sidebar');
+    this.router.navigate(['/login']);
+  }
 }

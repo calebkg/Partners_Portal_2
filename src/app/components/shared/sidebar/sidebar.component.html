@@ -1,5 +1,9 @@
 <div class="sidebar-overlay" *ngIf="open" (click)="closeSidebar()"></div>
 <div class="sidebar" [ngClass]="{ 'sidebar-open': open }">
+  <div class="logout-logo-container">
+    <img src="assets/logout-logo.png" alt="Logout" class="logout-logo" (click)="logout()">
+  </div>
+  
   <div class="logo-container">
     <div class="logo">
       <img class="logo-icon" src="login-logo.png" alt="inSupplyHealth Logo" />
