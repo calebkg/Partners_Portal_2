@@ -24,7 +24,8 @@ export class LoginComponent {
   }
 
   goToReset() {
-    this.router.navigate(['/reset-password']);
+    // Navigate to reset password when implemented
+    console.log('Reset password functionality to be implemented');
   }
 
   goToRegister() {
